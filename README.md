@@ -17,6 +17,57 @@ It consists in a simple text editor that take from the standard input a command 
 | `r` | redo | ```12r```|The number identifies how many undo done must be reverted. If it's grated than the undos, then reverts to the latest state.|
 | `q`| quit | | Leave the text editor.|
 
-After typing in the `c` command, the strings (both new or modified) must follow and have to be separated from each other by the `\n` character. Once the user has finished typing in all the strings, the escaping character `.` (full stop) is expected. 
+After typing in the `c` command, the strings (both new or modified) must follow and have to be separated from each other by the `\n` character. Once the user has finished typing in all the strings, the escaping character `.` (full stop) is expected on a new line. 
 
 ## Example
+```Text
+1,2c
+prima riga
+seconda riga
+.
+2,3c
+nuova seconda riga
+terza riga
+.
+1,3p
+1,1c
+nuova prima riga
+.
+1,2p
+2,2d
+4,5p
+1,3p
+4,5d
+1,4p
+3u
+1,6p
+1r
+1,3p
+q
+```
+The correct output is:
+```Text
+prima riga
+nuova seconda riga
+terza riga
+nuova prima riga
+nuova seconda riga
+.
+.
+nuova prima riga
+terza riga
+.
+nuova prima riga
+terza riga
+.
+.
+prima riga
+nuova seconda riga
+terza riga
+.
+.
+.
+nuova prima riga
+nuova seconda riga
+terza riga
+```
